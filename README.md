@@ -291,13 +291,13 @@ which looks like:
     "/home/gasket/packages/deno-sqlite3/test/deps.ts"
   ],
   "jump_libs": [
-    "/home/thodoris/.cache/deno/plug/https/github.com/78749b9d49a2ade61a15e9f85b00f70dbb4a41d888e32eb719cae983f13dead9.so"
+    "/home/gasket/.cache/deno/plug/https/github.com/78749b9d49a2ade61a15e9f85b00f70dbb4a41d888e32eb719cae983f13dead9.so"
   ],
   "bridges": [
     {
       "jsname": "sqlite3/../../../src/ffi.default.sqlite3_bind_parameter_count",
       "cfunc": "sqlite3_bind_parameter_count",
-      "library": "/home/thodoris/.cache/deno/plug/https/github.com/78749b9d49a2ade61a15e9f85b00f70dbb4a41d888e32eb719cae983f13dead9.so",
+      "library": "/home/gasket/.cache/deno/plug/https/github.com/78749b9d49a2ade61a15e9f85b00f70dbb4a41d888e32eb719cae983f13dead9.so",
       "DENO_FFI": true
     },
 	# more bridges
