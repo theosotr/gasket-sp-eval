@@ -134,19 +134,115 @@ docker run -ti --rm gasket-eval
 
 ## Usage
 
-The `gasket` executable provides a rich CLI with many available options.
+The `gasket` executable provides a command-line interface that allows you
+to an analyze a given *installed* `npm` package
+and identify its bridges:
 
 ```
-TODO
+gasket@a1a0025981b8:~$ gasket --help
+Options:
+  --version  Show version number                                   [boolean]
+  -r, --root     Directory of the package installation to be analyzed
+                                                             [string] [required]
+  -o, --output   A JSON file that includes the bridges found by Gasket  [string]
+      --help     Show help                                             [boolean]
+
 ```
 
 ## Example: Finding "Bridges" from JavaScript to Low-Level Code
 
+In this section,
+we illustrate the basic usage of `Gasket` by analyzing two `npm` packages:
+one executed on Node.js and the other on Deno.
+
 ### Example 1: Analyzing a Node.js Package
 
+In the first example,
+we install and analyze `node-sqlite3`,
+a popular `npm` package that is executed on Node.js.
+Before analyzing this package with `Gasket`,
+we need to install it by running:
+
 ```
-TODO
+gasket@a1a0025981b8:~$ mkdir -p packages
+gasket@a1a0025981b8:~$ npm install --prefix packages sqlite3
 ```
+
+The above commands fetch and install the `node-sqlite3` package
+inside the `/home/gasket/packages/` directory.
+
+Then,
+we analyze the installed package with `Gasket` by running
+(estimated running time 15--60 seconds) depending on your machine:
+
+```
+gasket@a1a0025981b8:~$ gasket -r packages/node_modules/sqlite3 -o bridges.json
+```
+
+The above command outputs a JSON file called `bridges.json` that
+includes all bridges identified by `Gasket`.
+This `bridges.json` file for this `node-sqlite3` example looks
+like the following:
+
+```python
+{
+  "objects_examined": 1426,
+  "callable_objects": 943,
+  "foreign_callable_objects": 28,
+  "duration_sec": 131,
+  "count": 28,
+  "modules": [
+    "/home/gasket/packages/node_modules/sqlite3/build/Release/node_sqlite3.node"
+  ],
+  "jump_libs": [
+    "/home/gasket/packages/node_modules/sqlite3/build/Release/node_sqlite3.node"
+  ],
+  "bridges": [
+    {
+      "jsname": "sqlite3/build/Release/node_sqlite3.Database",
+      "cfunc": "node_sqlite3::Database::Database",
+      "library": "/home/gasket/packages/node_modules/sqlite3/build/Release/node_sqlite3.node"
+    },
+    {
+      "jsname": "sqlite3/build/Release/node_sqlite3.Statement",
+      "cfunc": "node_sqlite3::Statement::Statement",
+      "library": "/home/gasket/packages/node_modules/sqlite3/build/Release/node_sqlite3.node"
+    }
+  # ... more bridges here ...
+  ]
+}
+```
+
+Below,
+there's information for every key included in the resulting
+JSON file:
+
+* `objects_examined`: Counting all objects examined by `Gasket`.
+* `callable_objects`: Counting all callable objects examined by `Gasket`.
+* `foreign_callbable_objects`: Counting the number of callbable objects
+with a foreign implementation (e.g., an implementation in C++).
+* `duration`: Time spent analyzing the given package.
+* `count`: The number of identified bridges.
+* `modules`: The binary extension modules found in the installation of the
+given package. For example, `node-sqlite` includes only one binary extension
+module found at `packages/node_modules/sqlite3/build/Release/node_sqlite3.node`.
+* `jump_libs`:  The binary extension modules for which `Gasket` identified bridges
+that lead to them.
+* `bridges`: A detailed list of identified bridges. Every bridge is a triple
+containing the following information:
+  - `jsname`: The name of the foreign callbable object at the JavaScript side.
+  - `cfunc`: The name of the low-level function that implements the logic
+   of the object exposed in JavaScript.
+  - `library`: The library where this low-level function is found.
+
+As an illustration, we describe one of the bridges shown in the JSON file
+(others are omitted for brevity). In the node-sqlite package, there is a
+callable object `node_sqlite3.Database`, which is implemented by the C++
+class `node_sqlite3::Database::Database`.
+This class resides in the library located at
+`/home/gasket/packages/node_modules/sqlite3/build/Release/node_sqlite3.node`.
+
+
 
 
 ### Example 2: Analyzing a Deno Package
