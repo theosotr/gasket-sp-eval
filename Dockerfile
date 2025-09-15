@@ -19,11 +19,37 @@ USER gasket
 ENV HOME=/home/gasket
 WORKDIR ${HOME}
 
+# Install Node
 ADD --chown=gasket:gasket ./prv-node ${HOME}/node_src
-ADD --chown=gasket:gasket ./prv-jsxray ${HOME}/gasket_src
 
 WORKDIR ${HOME}/node_src
-RUN ./configure --debug && make -j4
-RUN cp out/Debug/node /usr/local/bin/node
+RUN ./configure --debug && make -j8
+RUN sudo cp out/Debug/node /usr/local/bin/node
+# ADD --chown=root:root ./test/node /usr/local/bin/node
 
+USER root
+# Install npm
+RUN curl -L https://www.npmjs.com/install.sh | sh
+
+# Install deno
+COPY ./installation_scripts {HOME}/installation_scripts/
+RUN ./installation_scripts/deno.sh
+RUN rm -rf ./installation_scripts
+
+# Install Gasket
+USER gasket
+RUN sudo chown -R 1001:1001 "${HOME}/.npm" 
+RUN mkdir -p "$HOME/.npm-modules"
+RUN npm config set prefix "$HOME/.npm-modules"
+RUN echo 'export PATH="$HOME/.npm-modules/bin:$PATH"' >> ~/.bashrc
+ADD --chown=gasket:gasket ./prv-jsxray ${HOME}/gasket_src
+WORKDIR ${HOME}/gasket_src
+RUN npm install && npm link
+
+USER root
+RUN apt install -y gdb
+
+USER gasket
+
+ENV GASKET_ROOT=${HOME}/gasket_src
 WORKDIR ${HOME}
