@@ -1,0 +1,6 @@
+[submodule "prv-jsxray"]
+	path = prv-jsxray
+	url = git@github.com:grgalex/prv-jsxray.git
+[submodule "prv-node"]
+	path = prv-node
+	url = git@github.com:grgalex/prv-node.git
