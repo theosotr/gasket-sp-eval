@@ -244,13 +244,79 @@ This class resides in the library located at
 
 
 
-
 ### Example 2: Analyzing a Deno Package
 
+In the second example,
+we show how we can use `Gasket` to analyze a Deno package.
+In particular,
+we analyze the [`@db/sqlite`](https://github.com/denodrivers/sqlite3)
+package.
+
+To install the package,
+run:
 
 ```
-TODO
+gasket@a1a0025981b8:~$ git clone https://github.com/denodrivers/sqlite3 packages/deno-sqlite3
 ```
+
+Then,
+to analyze it using `Gasket`,
+run:
+
+```
+gasket@a1a0025981b8:~$ gasket-deno -r packages/deno-sqlite3 -o deno-bridges.json
+```
+
+The output is then is found in the `deno-bridges.json` file,
+which looks like:
+
+``` python
+{
+  "objects_examined": 7375,
+  "callable_objects": 5593,
+  "foreign_callable_objects": 73,
+  "duration": 3,
+  "count": 73
+  "modules": [
+    "/home/gasket/packages/deno-sqlite3/scripts/build.ts",
+    "/home/gasket/packages/deno-sqlite3/deps.ts",
+    "/home/gasket/packages/deno-sqlite3/src/statement.ts",
+    "/home/gasket/packages/deno-sqlite3/src/util.ts",
+    "/home/gasket/packages/deno-sqlite3/src/ffi.ts",
+    "/home/gasket/packages/deno-sqlite3/src/constants.ts",
+    "/home/gasket/packages/deno-sqlite3/src/database.ts",
+    "/home/gasket/packages/deno-sqlite3/src/blob.ts",
+    "/home/gasket/packages/deno-sqlite3/mod.ts",
+    "/home/gasket/packages/deno-sqlite3/test/test.ts",
+    "/home/gasket/packages/deno-sqlite3/test/deps.ts"
+  ],
+  "jump_libs": [
+    "/home/thodoris/.cache/deno/plug/https/github.com/78749b9d49a2ade61a15e9f85b00f70dbb4a41d888e32eb719cae983f13dead9.so"
+  ],
+  "bridges": [
+    {
+      "jsname": "sqlite3/../../../src/ffi.default.sqlite3_bind_parameter_count",
+      "cfunc": "sqlite3_bind_parameter_count",
+      "library": "/home/thodoris/.cache/deno/plug/https/github.com/78749b9d49a2ade61a15e9f85b00f70dbb4a41d888e32eb719cae983f13dead9.so",
+      "DENO_FFI": true
+    },
+	# more bridges
+  ]
+}
+```
+
+In particular,
+`Gasket` found 73 bridges.
+The `@db/sqlite` package is also included in our evaluation
+(see Table 2 in our paper).
+
+
+Now, you can exit the Docker container by running:
+
+```
+gasket@a1a0025981b8:~$ exit
+```
+
 
 # Step By Step Instructions
 
