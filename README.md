@@ -86,16 +86,16 @@ After downloading the Docker image successfully,
 please navigate to the root directory of the artifact:
 
 ```
-cd gasket-eval
+cd gasket-sp-eval
 ```
 
 Build Docker Image Locally
 --------------------------
 
-First enter the `gasket-eval/` directory:
+First enter the `gasket-sp-eval/` directory:
 
 ```
-cd gasket-eval
+cd gasket-sp-eval
 ```
 
 To build the image (named `gasket-eval`), run the following command 
@@ -123,7 +123,7 @@ all supporting tools needed for result processing.
 You can enter a new container by using the following command:
 
 ```
-docker run -ti --rm --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v data:/home/gasket/data gasket-eval
+sudo docker run -ti --rm --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v ./data:/home/gasket/data gasket-eval
 ```
 
 ## Usage
@@ -261,7 +261,7 @@ run:
 gasket@a1a0025981b8:~$ gasket-deno -r packages/deno-sqlite3 -o deno-bridges.json
 ```
 
-The output is then is found in the `deno-bridges.json` file,
+The output is then found in the `deno-bridges.json` file,
 which looks like:
 
 ``` python
@@ -314,10 +314,12 @@ gasket@a1a0025981b8:~$ exit
 ### Example 3: Running a large-scale analysis on multiple Node.js packages (RQ4, RQ5)
 
 We provide the `find_bridges.py` utility to run large-scale analysis on multiple Node.js packages.
-We used this to calculate the bridges for the 1,266 packages used in RQ4 and RQ5.
+
+We utitlized this to calculate the bridges for the 1,266 packages evaluated in RQ4 and RQ5.
 
 ```
 gasket@a75e1999faa1:~$ python3 gasket_src/scripts/find_bridges.py -h
+
 usage: find_bridges.py [-h] [-l LOG] [-i INPUT] [-o OUTPUT] [-A]
 
 Use Gasket to generate bridges for a set of Node.js packages.
@@ -345,11 +347,10 @@ In this case, the results are stored in the `analysis/` directory.
 python3 gasket_src/scripts/find_bridges.py -i data/sample_packages_versioned.csv -o analysis/
 ```
 
-The utility stored results in a structured manner in the output directory.
+The utility stores results in a structured manner in the output directory.
 
 For example, for the `tree-sitter-ride:0.1.3` package,
 the corresponding bridges are stored under `analysis/data/bridges/npm/t/tree-sitter-ride/0.1.3/bridges.json`.
 
-Additionally, the utility stores the bridges in .txt format (for direct comparison against Charon),
-under the `analysis/gasket_bridges/` directory.
-
+Additionally, the utility stores the plain bridges in text format (for direct comparison against Charon),
+under the `analysis/data/gasket_bridges/` directory.
