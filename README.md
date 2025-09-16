@@ -10,27 +10,21 @@ This is the artifact for the S&P'26 paper titled
 - [Setup](#setup)
 - [Getting Started](#getting-started)
   * [Usage](#usage)
-  * [Example: Validating the Pattern-Match Coverage Analyzer of Scala](#example-validating-the-pattern-match-coverage-analyzer-of-scala)
-- [Step by Step Instructions](#step-by-step-instructions)
-  * [RQ1: Bug-Finding Results (Section 5.2)](#rq1-bug-finding-results-section-52)
-  * [RQ2: Bug and Test Case Characteristics (Section 5.3)](#rq2-bug-and-test-case-characteristics-section-53)
-  * [RQ3: Performance (Section 5.4)](#rq3-performance-section-54)
-  * [Re-running Experiments and Reproducing Tables and Figures with New Data (Optional)](#re-running-experiments-and-reproducing-tables-and-figures-with-new-data-optional)
+  * [Example 1: Analyzing a Node.js Package](#example-1-analyzing-a-nodejs-package)
+  * [Example 2: Analyzing a Deno Package](#example-2-analyzing-a-deno-package)
 
 # Overview
 
-The artifact contains the instructions and scripts to re-run the evaluation
-described in our paper. The artifact has the following structure:
+The artifact contains the instructions to run `Gasket`,
+a tool for finding all bridges from JavaScript to low-level code created
+at module load time. The artifact has the following structure:
 
-* `scripts/`: This directory contains the scripts needed to re-run the
 experiments presented in our paper.
-* `data/`: This is the directory that contains the precomputed results of our
-evaluation.
+* `data/`: Directory that contains information about the packages analyzed in our evaluation. 
+* `node`: Directory containing the source code of Node.js
 * `gasket/`: Contains the source code of the tool (provided as a git submodule).
   The name of the tool is Gasket and is used to find "bridges" between
   JavaScript and low-level code.
-* `figures/`: This directory will be used to save the reproduced
-figures of our paper.
 * `Dockerfile`: The Dockerfile used to create a Docker image of our artifact.
   This image contains all data and dependencies.
 
@@ -316,60 +310,3 @@ Now, you can exit the Docker container by running:
 ```
 gasket@a1a0025981b8:~$ exit
 ```
-
-
-# Step By Step Instructions
-
-**NOTE**: Before proceeding with instructions included
-in this Section, make sure that you have successfully
-built the Docker image named `gasket-eval`
-(see the instructions included in the [Setup](#setup) guide).
-
-To validate the main results presented in the paper,
-first create a new Docker
-container by running:
-
-```
-docker run -ti --rm \
-  -v $(pwd)/data:/home/gasket/data \
-  -v $(pwd)/scripts:/home/gasket/eval-scripts \
-  -v $(pwd)/figures:/home/gasket/eval-figures \
-  -v $(pwd)/new-results:/home/gasket/new-results \
-  gasket-eval
-```
-
-Note that we mount four _local volumes_ inside the newly created container.
-The first volume (`data/`) contains the data collected during our evaluation,
-including the bugs discovered by `Gasket`.
-The second volume (`eval-scripts/`) includes
-all necessary scripts to reproduce
-and validate the results of the paper.
-The third volume (`eval-figures/`) is used to save the figures of our paper.
-Finally,
-the last volume (`new-results/`) mounts an empty directory where
-you can store the results if you decide to re-run our experiments.
-
-
-**NOTE**: Recomputing all the results presented in our paper takes
-approximately three days.
-
-
-## RQ1: Gasket Effectiveness (Section 6.1)
-
-TODO
-
-## RQ2: Gasket Performance (Section 6.2)
-
-TODO
-
-## RQ3: Gasket Applicability (Section 6.3)
-
-TODO
-
-## RQ4: Gasket vs. Charon (Section 6.4)
-
-TODO
-
-## RQ5: Reachability Analysis with Gasket (Section 6.5)
-
-TODO
