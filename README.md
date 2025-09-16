@@ -29,13 +29,13 @@ experiments presented in our paper.
   This image contains all data and dependencies.
 
 Gasket is available as open-source software under the
-GNU General Public License v3.0, and can also be reached through the following
+Apache-2.0 License, and can also be reached through the following
 repository: https://github.com/grgalex/gasket.
 
 
 # Requirements
 
-__Note: This artifact has been tested on a 64-bits Ubuntu machine.
+__Note: This artifact has been tested on a 64-bit Ubuntu machine.
 Nevertheless, our Docker image works on any given operating system
 that supports Docker.__
 
