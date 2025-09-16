@@ -44,12 +44,6 @@ that supports Docker.__
 
 # Setup
 
-To get the artifact, run:
-
-```
-git clone --recursive https://github.com/theosotr/gasket-sp-eval
-```
-
 The easiest way to get Gasket and all dependencies needed for evaluating 
 the artifact is to download a _pre-built_ Docker 
 image from DockerHub. Another option is to build the Docker 
@@ -86,11 +80,18 @@ After downloading the Docker image successfully,
 please navigate to the root directory of the artifact:
 
 ```
-cd gasket-sp-eval
+cd artifact/gasket-sp-eval
 ```
 
 Build Docker Image Locally
 --------------------------
+
+With `artifact/gasket-sp-eval` as your working directory, initialize its submodules:
+
+```
+git submodule update --init --recursive
+```
+
 
 First enter the `gasket-sp-eval/` directory:
 
