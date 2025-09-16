@@ -4,7 +4,7 @@
 curl https://sh.rustup.rs -sSf | sh -s -- -y
 source ${HOME}/.cargo/env
 
-sudo apt install cmake llvm clang pkg-config libgtk-3-dev
+sudo apt install cmake llvm clang pkg-config libgtk-3-dev -y
 
 git clone --recursive https://github.com/grgalex/prv-deno deno
 git clone --recursive https://github.com/grgalex/prv-rusty_v8 rusty_v8
