@@ -15,3 +15,6 @@ cd ..
 git clone --branch 0.347.0 --single-branch https://github.com/denoland/deno_core
 cd deno
 V8_FROM_SOURCE=1 cargo --config .cargo/local-build.toml build
+
+cd ..
+sudo rm -rf deno v8 rusty_v8
