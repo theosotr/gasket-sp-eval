@@ -12,6 +12,7 @@ This is the artifact for the S&P'26 paper titled
   * [Usage](#usage)
   * [Example 1: Analyzing a Node.js Package](#example-1-analyzing-a-nodejs-package)
   * [Example 2: Analyzing a Deno Package](#example-2-analyzing-a-deno-package)
+  * [Example 3: Running a large-scale analysis on multiple Node.js packages](#example-3)
 
 # Overview
 
@@ -83,7 +84,7 @@ please navigate to the root directory of the artifact:
 cd artifact/gasket-sp-eval
 ```
 
-Build Docker Image Locally
+Build Docker Image Locally (OPTIONAL)
 --------------------------
 
 With `artifact/gasket-sp-eval` as your working directory, initialize its submodules:
@@ -306,7 +307,7 @@ The `@db/sqlite` package is also included in our evaluation
 (see Table 2 in our paper).
 
 
-### Example 3: Running a large-scale analysis on multiple Node.js packages (RQ4, RQ5)
+### Example 3: Running a large-scale analysis on multiple Node.js packages
 
 We provide the `find_bridges.py` utility to run large-scale analysis on multiple Node.js packages.
 
