@@ -32,7 +32,7 @@ USER root
 RUN curl -L https://www.npmjs.com/install.sh | sh
 
 # Install deno
-COPY ./installation_scripts/deno.sh {HOME}/installation_scripts/deno.sh
+COPY ./installation_scripts/deno.sh ${HOME}/installation_scripts/deno.sh
 RUN ./installation_scripts/deno.sh
 
 RUN rm -rf ./installation_scripts
