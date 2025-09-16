@@ -314,7 +314,7 @@ We provide the `find_bridges.py` utility to run large-scale analysis on multiple
 We utitlized this to calculate the bridges for the 1,266 packages evaluated in RQ4 and RQ5.
 
 ```
-gasket@a75e1999faa1:~$ python3 gasket_src/scripts/find_bridges.py -h
+gasket@a1a0025981b8:~$ python3 gasket_src/scripts/find_bridges.py -h
 
 usage: find_bridges.py [-h] [-l LOG] [-i INPUT] [-o OUTPUT] [-A]
 
@@ -340,7 +340,7 @@ To keep running times low, you can run the utility on 20 packages.
 In this case, the results are stored in the `analysis/` directory.
 
 ```
-python3 gasket_src/scripts/find_bridges.py -i data/sample_packages_versioned.csv -o analysis/
+gasket@a1a0025981b8:~$ python3 gasket_src/scripts/find_bridges.py -i data/sample_packages_versioned.csv -o analysis/
 ```
 
 The utility stores results in a structured manner in the output directory.
