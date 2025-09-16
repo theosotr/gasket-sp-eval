@@ -306,12 +306,6 @@ The `@db/sqlite` package is also included in our evaluation
 (see Table 2 in our paper).
 
 
-Now, you can exit the Docker container by running:
-
-```
-gasket@a1a0025981b8:~$ exit
-```
-
 ### Example 3: Running a large-scale analysis on multiple Node.js packages (RQ4, RQ5)
 
 We provide the `find_bridges.py` utility to run large-scale analysis on multiple Node.js packages.
@@ -355,3 +349,10 @@ the corresponding bridges are stored under `analysis/data/bridges/npm/t/tree-sit
 
 Additionally, the utility stores the plain bridges in text format (for direct comparison against Charon),
 under the `analysis/data/gasket_bridges/` directory.
+
+Now, you can exit the Docker container by running:
+
+```
+gasket@a1a0025981b8:~$ exit
+```
+
