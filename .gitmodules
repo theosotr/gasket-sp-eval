@@ -1,5 +1,5 @@
 [submodule "prv-jsxray"]
-	path = prv-jsxray
+	path = gasket
 	url = git@github.com:grgalex/prv-jsxray.git
 [submodule "prv-node"]
 	path = prv-node
