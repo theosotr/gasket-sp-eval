@@ -271,7 +271,7 @@ which looks like:
   "objects_examined": 7375,
   "callable_objects": 5593,
   "foreign_callable_objects": 73,
-  "duration": 3,
+  "duration_sec": 3,
   "count": 73
   "modules": [
     "/home/gasket/packages/deno-sqlite3/scripts/build.ts",
@@ -291,7 +291,7 @@ which looks like:
   ],
   "bridges": [
     {
-      "jsname": "sqlite3/../../../src/ffi.default.sqlite3_bind_parameter_count",
+      "jsname": "sqlite3/src/ffi.default.sqlite3_bind_parameter_count",
       "cfunc": "sqlite3_bind_parameter_count",
       "library": "/home/gasket/.cache/deno/plug/https/github.com/78749b9d49a2ade61a15e9f85b00f70dbb4a41d888e32eb719cae983f13dead9.so",
       "DENO_FFI": true
