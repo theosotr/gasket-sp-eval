@@ -123,7 +123,7 @@ all supporting tools needed for result processing.
 You can enter a new container by using the following command:
 
 ```
-docker run -ti --rm gasket-eval
+docker run -ti --rm --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v data:/home/gasket/data gasket-eval
 ```
 
 ## Usage
@@ -310,3 +310,46 @@ Now, you can exit the Docker container by running:
 ```
 gasket@a1a0025981b8:~$ exit
 ```
+
+### Example 3: Running a large-scale analysis on multiple Node.js packages (RQ4, RQ5)
+
+We provide the `find_bridges.py` utility to run large-scale analysis on multiple Node.js packages.
+We used this to calculate the bridges for the 1,266 packages used in RQ4 and RQ5.
+
+```
+gasket@a75e1999faa1:~$ python3 gasket_src/scripts/find_bridges.py -h
+usage: find_bridges.py [-h] [-l LOG] [-i INPUT] [-o OUTPUT] [-A]
+
+Use Gasket to generate bridges for a set of Node.js packages.
+
+options:
+  -h, --help            show this help message and exit
+  -l LOG, --log LOG     Provide logging level. Example --log debug
+  -i INPUT, --input INPUT
+                        Path to a CSV file with package:version pairs.
+  -o OUTPUT, --output OUTPUT
+                        Output directory to store bridges.
+  -A, --always          Always generate artifacts; do not reuse existing data (e.g., installs).
+```
+
+We provide three CSV files under the `data/` directory:
+- `gasket_packages.csv`, which holds the names of the 1,266 packages
+- `gasket_packages_versioned.csv`, which holds the package:version pairs for the 1,266 packages
+- `sample_packages_versioned.csv`, which holds 20 sample packages
+
+To keep running times low, you can run the utility on 20 packages.
+
+In this case, the results are stored in the `analysis/` directory.
+
+```
+python3 gasket_src/scripts/find_bridges.py -i data/sample_packages_versioned.csv -o analysis/
+```
+
+The utility stored results in a structured manner in the output directory.
+
+For example, for the `tree-sitter-ride:0.1.3` package,
+the corresponding bridges are stored under `analysis/data/bridges/npm/t/tree-sitter-ride/0.1.3/bridges.json`.
+
+Additionally, the utility stores the bridges in .txt format (for direct comparison against Charon),
+under the `analysis/gasket_bridges/` directory.
+
