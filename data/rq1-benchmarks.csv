@@ -1,0 +1,17 @@
+package,runtime
+re2,node
+@u4/opencv4nodejs,node
+leveldown,node
+fs-native-extensions,node
+sharp,node
+sqlite3,node
+os,node-internal
+fs,node-internal
+skia-canvas,node
+@cubejs-backend/native,node
+lz4-napi,node
+@napi-rs/canvas,node
+@fluvio/client,node
+venbind,node
+tiny-secp256k1,wasm
+@cwasm/lodepng,wasm
