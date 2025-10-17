@@ -6,6 +6,8 @@ sudo apt install libc++-dev libc++abi-dev clang cmake yasm -y
 sudo wget -qO /usr/local/bin/ninja.gz https://github.com/ninja-build/ninja/releases/latest/download/ninja-linux.zip
 sudo gunzip /usr/local/bin/ninja.gz
 sudo chmod a+x /usr/local/bin/ninja
+curl https://sh.rustup.rs -sSf | sh -s -- -y
+source $HOME/.cargo/env
 cd packages/canvas
 node scripts/build-skia.js
 node scripts/build-skia.js

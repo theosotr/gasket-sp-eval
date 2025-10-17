@@ -8,7 +8,7 @@ scripts=
 
 while getopts "p:o:s:" opt; do
   case "$opt" in
-    p)  benchmarks=$OPTARG
+    p)  benchmarks=$(realpath $OPTARG)
         ;;
     o)  output=$(realpath $OPTARG)
         ;;
@@ -17,6 +17,11 @@ while getopts "p:o:s:" opt; do
   esac
 done
 shift $(($OPTIND - 1));
+
+echo benchmarks = $benchmarks
+echo output = $output
+echo scripts = $scripts
+
 
 if [ -z $benchmarks ]; then
   echo "You need to provide the benchmarks via -p option"
@@ -30,12 +35,13 @@ fi
 
 if [ ! -f $benchmarks ]; then
   echo "$benchmarks is not a valid file"
+  exit 1
 fi
 
-if [ -n $scripts ] && [ ! -f $scripts ]; then
+if [ -n $scripts ] && [ ! -d $scripts ]; then
   echo "$scripts is not a valid file"
+  exit 1
 fi
-
 
 mkdir -p $output
 tail -n +2 $benchmarks |
@@ -51,19 +57,21 @@ while IFS=, read -r package runtime; do
     rm -rf packages/node_modules && npm install --prefix packages $package
   fi
 
-  mod=packages/node_modues/$package
+  mod="-r packages/node_modules/$package"
   # Adjusting CLI options for specific packages
   if [ "$package_base" = "sharp" ]; then
-    mod=packages/sharp
+    mod="-r packages/sharp"
   elif [ "$package_base" = "opencv4nodejs" ]; then
-    mod=packages/opencv4nodejs
+    mod="-r packages/opencv4nodejs"
   elif [ "$package_base" = "canvas" ]; then
-    mod=packages/canvas/skia.linux-x64-gnu.node
+    mod="-m $(realpath packages/canvas/skia.linux-x64-gnu.node)"
+  elif [ "$package_base" = "lz4-napi" ]; then
+    mod="-r packages/node_modules/@antoniomuso/lz4-napi-linux-x64-gnu"
   fi
 
   echo "Analyzing package $package with Gasket..."
   if [ "$runtime" = "node" ]; then
-    gasket -r packages/node_modules/$package --native-only \
+    gasket  $mod --native-only \
       -o "$output/$alternate_name"
   elif [ "$runtime" = "node-internal" ]; then
     gasket -m $package --internal --native-only -o "$output/$alternate_name"
